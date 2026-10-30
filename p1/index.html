@@ -1,23 +1,124 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>AJAX Student Details</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Database Lookup | Asynchronous AJAX</title>
+    <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
+    <main class="container">
+        <header class="app-header">
+            <span class="badge">Web Technology Practical - Program 1</span>
+            <h1>Student Record Lookup</h1>
+            <p class="subtitle">Asynchronous Database Access using Vanilla JavaScript XMLHttpRequest &amp; PHP</p>
+        </header>
 
-<h2>Student Details</h2>
+        <!-- Search Form -->
+        <section class="card search-card">
+            <form id="searchForm" novalidate>
+                <label for="regno" class="input-label">Enter Register Number:</label>
+                <div class="search-group">
+                    <input 
+                        type="text" 
+                        id="regno" 
+                        name="regno" 
+                        placeholder="e.g. 101, 102, 103" 
+                        maxlength="20"
+                        autocomplete="off"
+                        required
+                    >
+                    <button type="submit" id="searchBtn" class="btn btn-primary">
+                        <span id="btnText">Search Record</span>
+                    </button>
+                    <button type="button" id="clearBtn" class="btn btn-secondary">Clear</button>
+                </div>
+            </form>
 
-Enter Register Number:
-<input type="text" id="regno">
+            <!-- Sample test badges for quick testing during lab viva -->
+            <div class="sample-badges">
+                <span class="sample-label">Quick Test:</span>
+                <button type="button" class="chip" data-regno="101">101 (Abi)</button>
+                <button type="button" class="chip" data-regno="102">102 (Rahul)</button>
+                <button type="button" class="chip" data-regno="103">103 (Arun)</button>
+                <button type="button" class="chip" data-regno="999">999 (Nonexistent)</button>
+            </div>
+        </section>
 
-<button onclick="getStudent()">Search</button>
+        <!-- Loading Indicator -->
+        <div id="loading" class="status-indicator loading-box hidden" aria-live="polite">
+            <div class="spinner"></div>
+            <span>Fetching record asynchronously from database...</span>
+        </div>
 
-<br><br>
+        <!-- Alert / Notification Message -->
+        <div id="message" class="message-box hidden" role="alert"></div>
 
-<div id="result"></div>
+        <!-- Student Details Display Area -->
+        <section id="result" class="card result-card hidden" aria-live="polite">
+            <div class="card-header">
+                <h2>Student Information</h2>
+                <span class="status-badge" id="studentStatusBadge">Verified</span>
+            </div>
+            
+            <div class="details-grid">
+                <div class="detail-item">
+                    <span class="detail-label">Register Number</span>
+                    <span class="detail-value highlight" id="resRegNo">-</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">Student Name</span>
+                    <span class="detail-value" id="resStdName">-</span>
+                </div>
+            </div>
 
-<script src="script.js"></script>
+            <h3 class="marks-heading">Academic Performance</h3>
+            <table class="marks-table">
+                <thead>
+                    <tr>
+                        <th>Subject</th>
+                        <th>Maximum Marks</th>
+                        <th>Marks Obtained</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Subject 1 (Mark 1)</td>
+                        <td>100</td>
+                        <td id="resMark1" class="mark-val">-</td>
+                    </tr>
+                    <tr>
+                        <td>Subject 2 (Mark 2)</td>
+                        <td>100</td>
+                        <td id="resMark2" class="mark-val">-</td>
+                    </tr>
+                    <tr>
+                        <td>Subject 3 (Mark 3)</td>
+                        <td>100</td>
+                        <td id="resMark3" class="mark-val">-</td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr class="total-row">
+                        <td><strong>Total Marks</strong></td>
+                        <td>300</td>
+                        <td id="resTotal" class="mark-val"><strong>-</strong></td>
+                    </tr>
+                    <tr class="avg-row">
+                        <td><strong>Percentage / Average</strong></td>
+                        <td>100%</td>
+                        <td id="resAvg" class="mark-val"><strong>-</strong></td>
+                    </tr>
+                </tfoot>
+            </table>
+        </section>
 
+        <footer class="app-footer">
+            <p>Demonstrating genuine asynchronous XMLHttpRequest (readyState 0-4, HTTP status codes, JSON parsing).</p>
+        </footer>
+    </main>
+
+    <!-- External JavaScript: No inline scripts -->
+    <script src="script.js"></script>
 </body>
 </html>
