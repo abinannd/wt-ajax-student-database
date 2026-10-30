@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>JavaScript Event Handling</title>
+
+    <style>
+        body {
+            font-family: Arial;
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        #box {
+            width: 300px;
+            height: 150px;
+            border: 2px solid black;
+            margin: 30px auto;
+            padding: 20px;
+        }
+
+        input {
+            padding: 10px;
+            font-size: 16px;
+        }
+    </style>
+
+    <script>
+        function mouseOver() {
+            document.getElementById("message").innerHTML =
+                "Mouse Over Event Occurred";
+        }
+
+        function mouseOut() {
+            document.getElementById("message").innerHTML =
+                "Mouse Out Event Occurred";
+        }
+
+        function mouseClick() {
+            document.getElementById("message").innerHTML =
+                "Mouse Click Event Occurred";
+        }
+
+        function keyDown() {
+            document.getElementById("keyMessage").innerHTML =
+                "Keyboard Key Pressed";
+        }
+
+        function keyUp() {
+            document.getElementById("keyMessage").innerHTML =
+                "Keyboard Key Released";
+        }
+    </script>
+</head>
+
+<body>
+
+    <h1>JavaScript Event Handling</h1>
+
+    <div id="box"
+         onmouseover="mouseOver()"
+         onmouseout="mouseOut()"
+         onclick="mouseClick()">
+
+        Move the mouse here<br><br>
+        Click inside this box
+    </div>
+
+    <h3 id="message">Mouse Event Message</h3>
+
+    <input type="text"
+           placeholder="Type something here"
+           onkeydown="keyDown()"
+           onkeyup="keyUp()">
+
+    <h3 id="keyMessage">Keyboard Event Message</h3>
+
+</body>
+</html>
