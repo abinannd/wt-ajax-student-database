@@ -3,127 +3,89 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Event Interaction Lab | JavaScript Event Handling</title>
+    <title>JavaScript Event Handling - Program 2</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- Ambient Background Crimson Lighting -->
-    <div class="ambient-glow glow-top" aria-hidden="true"></div>
-    <div class="ambient-glow glow-bottom" aria-hidden="true"></div>
-
     <div class="page-container">
 
-        <!-- A. HEADER -->
+        <!-- HEADER -->
         <header class="app-header">
-            <div class="header-meta">
-                <span class="badge practical-badge">WT Practical · Program 2</span>
-                <div class="status-indicator">
-                    <span class="pulse-dot" aria-hidden="true"></span>
-                    <span class="status-text">JavaScript Active</span>
-                </div>
-            </div>
-            <h1 class="main-title">EVENT INTERACTION LAB</h1>
-            <p class="subtitle">Exploring Mouse &amp; Keyboard Events in Real Time</p>
+            <span class="badge">Web Technology Practical · Program 2</span>
+            <h1>JavaScript Event Handling</h1>
+            <p class="subtitle">Demonstration of Mouse and Keyboard Events using Vanilla JavaScript</p>
         </header>
 
-        <!-- B. INTRODUCTION -->
-        <section class="intro-section" aria-label="Introduction">
-            <div class="intro-card">
-                <p class="quote">"Every interaction is an event."</p>
-                <p class="supporting-text">
-                    Explore how JavaScript responds to mouse movements, clicks, and keyboard input in real time. 
-                    Observe the event lifecycle, key codes, and dispatch timings.
-                </p>
-            </div>
-        </section>
-
-        <!-- TWO-COLUMN WORKSPACE: MOUSE & KEYBOARD PANELS -->
+        <!-- MAIN GRID: MOUSE & KEYBOARD PANELS -->
         <div class="panels-grid">
 
-            <!-- C. MOUSE INTERACTION PANEL -->
-            <section class="glass-panel" id="mouseSection" aria-labelledby="mouseHeading">
-                <div class="panel-header">
-                    <span class="panel-number">01</span>
-                    <h2 id="mouseHeading" class="panel-title">MOUSE EVENTS</h2>
+            <!-- 1. MOUSE INTERACTION PANEL -->
+            <section class="card" id="mouseSection">
+                <div class="card-header">
+                    <h2>01 — Mouse Events</h2>
+                    <span class="meta-tag" id="mouseEventTypeTag">Idle</span>
                 </div>
-                <p class="panel-desc">Triggers <code>mouseover</code>, <code>mouseout</code>, and <code>click</code> events.</p>
+                <p class="section-desc">Demonstrates <code>mouseover</code>, <code>mouseout</code>, and <code>click</code> events.</p>
 
-                <!-- Interactive Demonstration Area (Original ID: box preserved) -->
+                <!-- Interactive Demonstration Area (Original ID: box) -->
                 <div id="box" class="interactive-box" tabindex="0" role="region" aria-label="Interactive Mouse Testing Area">
                     <div class="box-content">
-                        <div class="box-icon" aria-hidden="true">
-                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M12 2a4 4 0 0 0-4 4v6a4 4 0 0 0 8 0V6a4 4 0 0 0-4-4z"></path>
-                                <path d="M12 6v3"></path>
-                                <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
-                                <path d="M12 19v3"></path>
-                            </svg>
-                        </div>
-                        <span class="box-prompt">Move the mouse here</span>
-                        <span class="box-subprompt">Click inside this box</span>
+                        <strong>Move the mouse here</strong>
+                        <span>Click inside this box</span>
                     </div>
                     <div class="click-ripple" id="clickRipple" aria-hidden="true"></div>
                 </div>
 
-                <!-- Mouse Event Output Messages (Original ID: message preserved) -->
-                <div class="event-display-card">
-                    <div class="display-label">CURRENT MOUSE STATUS</div>
-                    <h3 id="message" class="event-message">Awaiting mouse interaction...</h3>
-                    <div class="event-meta-bar">
-                        <span class="meta-tag" id="mouseEventTypeTag">Idle</span>
-                        <span class="meta-detail" id="mouseClickCounter">Clicks: 0</span>
+                <!-- Mouse Event Output Message (Original ID: message) -->
+                <div class="status-box">
+                    <div class="status-label">Mouse Event Status</div>
+                    <h3 id="message" class="status-text">Mouse Event Message</h3>
+                    <div class="status-meta">
+                        <span id="mouseClickCounter">Clicks: 0</span>
                     </div>
                 </div>
             </section>
 
-            <!-- D. KEYBOARD INTERACTION PANEL -->
-            <section class="glass-panel" id="keyboardSection" aria-labelledby="keyboardHeading">
-                <div class="panel-header">
-                    <span class="panel-number">02</span>
-                    <h2 id="keyboardHeading" class="panel-title">KEYBOARD EVENTS</h2>
+            <!-- 2. KEYBOARD INTERACTION PANEL -->
+            <section class="card" id="keyboardSection">
+                <div class="card-header">
+                    <h2>02 — Keyboard Events</h2>
+                    <span class="meta-tag" id="activeKeyEventType">Idle</span>
                 </div>
-                <p class="panel-desc">Captures <code>keydown</code> and <code>keyup</code> events as you type.</p>
+                <p class="section-desc">Demonstrates <code>keydown</code> and <code>keyup</code> events as you type.</p>
 
-                <!-- Text Input Area (Supports focus and typing) -->
-                <div class="input-wrapper">
-                    <label for="keyInput" class="input-label">Type inside this field:</label>
+                <!-- Text Input Field -->
+                <div class="input-group">
+                    <label for="keyInput">Type something here:</label>
                     <div class="input-control">
                         <input 
                             type="text" 
                             id="keyInput" 
-                            name="keyInput"
                             placeholder="Type something here..." 
-                            autocomplete="off" 
-                            spellcheck="false"
+                            autocomplete="off"
                         >
-                        <button type="button" id="clearInputBtn" class="clear-input-btn" title="Clear input text" aria-label="Clear input">
-                            &times;
-                        </button>
+                        <button type="button" id="clearInputBtn" class="clear-btn" title="Clear input">&times;</button>
                     </div>
                 </div>
 
-                <!-- Keyboard Event Output Messages (Original ID: keyMessage preserved) -->
-                <div class="event-display-card">
-                    <div class="display-label">CURRENT KEYBOARD STATUS</div>
-                    <h3 id="keyMessage" class="event-message">Awaiting keyboard input...</h3>
-                    
-                    <!-- Live Key Telemetry Matrix -->
-                    <div class="key-telemetry-grid">
-                        <div class="telemetry-item key-cap-container">
-                            <span class="telemetry-label">Active Key</span>
-                            <div class="key-cap" id="activeKeyCap">—</div>
+                <!-- Keyboard Event Output Message (Original ID: keyMessage) -->
+                <div class="status-box">
+                    <div class="status-label">Keyboard Event Status</div>
+                    <h3 id="keyMessage" class="status-text">Keyboard Event Message</h3>
+
+                    <!-- Key Details Display -->
+                    <div class="key-details">
+                        <div class="key-detail-item">
+                            <span class="key-label">Key:</span>
+                            <span class="key-badge" id="activeKeyCap">—</span>
                         </div>
-                        <div class="telemetry-item">
-                            <span class="telemetry-label">Key Name</span>
-                            <span class="telemetry-value" id="activeKeyName">None</span>
+                        <div class="key-detail-item">
+                            <span class="key-label">Name:</span>
+                            <strong id="activeKeyName">None</strong>
                         </div>
-                        <div class="telemetry-item">
-                            <span class="telemetry-label">Key Code</span>
-                            <span class="telemetry-value" id="activeKeyCode">None</span>
-                        </div>
-                        <div class="telemetry-item">
-                            <span class="telemetry-label">Event Type</span>
-                            <span class="telemetry-value" id="activeKeyEventType">Idle</span>
+                        <div class="key-detail-item">
+                            <span class="key-label">Code:</span>
+                            <code id="activeKeyCode">None</code>
                         </div>
                     </div>
                 </div>
@@ -131,18 +93,35 @@
 
         </div>
 
-        >
+        <!-- 3. LIVE EVENT MONITOR -->
+        <section class="card monitor-card">
+            <div class="card-header">
+                <div class="header-title-group">
+                    <h2>03 — Live Event Log</h2>
+                    <span class="badge" id="feedCountBadge">0 events</span>
+                </div>
+                <button type="button" id="clearFeedBtn" class="btn btn-sm">Clear Log</button>
+            </div>
+            <p class="section-desc">Real-time log of the latest 10 events captured by event listeners.</p>
 
-        <!-- F. FOOTER -->
+            <div class="feed-container">
+                <ul class="feed-list" id="eventFeed" role="log" aria-live="polite">
+                    <li class="empty-state" id="emptyFeedState">
+                        No events logged yet. Interact with the box or input field above.
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- FOOTER -->
         <footer class="app-footer">
-            <div class="footer-divider" aria-hidden="true"></div>
-            <p class="footer-heading">WEB TECHNOLOGY PRACTICAL — PROGRAM 2</p>
-            <p class="footer-sub">Built with HTML5, CSS3 &amp; Vanilla JavaScript.</p>
+            <p><strong>Web Technology Practical — Program 2</strong></p>
+            <p>Built with HTML5, CSS3 &amp; Vanilla JavaScript</p>
         </footer>
 
     </div>
 
-    <!-- External Vanilla JavaScript: Clean separation of concerns -->
+    <!-- External Script -->
     <script src="script.js"></script>
 </body>
 </html>

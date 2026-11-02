@@ -1,12 +1,4 @@
 <?php
-/**
- * Program 1: Asynchronous AJAX Database Access
- * Backend Database Handler (db.php)
- *
- * This script accepts a student register number via GET request,
- * queries the MySQL database using prepared statements, and returns
- * the result as a structured JSON response.
- */
 
 // Return structured JSON response with proper character encoding
 if (!headers_sent()) {

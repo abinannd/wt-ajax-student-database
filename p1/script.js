@@ -1,10 +1,5 @@
-/**
- * Program 1: Asynchronous AJAX Database Access
- * Client-Side Controller (script.js)
- * 
- * Demonstrates genuine asynchronous XMLHttpRequest communication
- * with a PHP backend and MySQL database without page reloads.
- */
+
+
 
 document.addEventListener("DOMContentLoaded", function () {
     // DOM Element References

@@ -1,22 +1,12 @@
-/**
- * Program 2: JavaScript Event Handling
- * Client-Side Controller (script.js)
- * 
- * Demonstrates native browser event handling:
- * - Mouse events: mouseover, mouseout, click
- * - Keyboard events: keydown, keyup
- * Real-time event monitor and telemetry dashboard.
- */
 
 document.addEventListener("DOMContentLoaded", function () {
-    // --- DOM Elements: Mouse Interaction ---
+    // --- Mouse Event Elements ---
     var box = document.getElementById("box");
     var mouseMessage = document.getElementById("message");
     var mouseEventTypeTag = document.getElementById("mouseEventTypeTag");
     var mouseClickCounter = document.getElementById("mouseClickCounter");
-    var clickRipple = document.getElementById("clickRipple");
 
-    // --- DOM Elements: Keyboard Interaction ---
+    // --- Keyboard Event Elements ---
     var keyInput = document.getElementById("keyInput");
     var keyMessage = document.getElementById("keyMessage");
     var clearInputBtn = document.getElementById("clearInputBtn");
@@ -25,7 +15,11 @@ document.addEventListener("DOMContentLoaded", function () {
     var activeKeyCode = document.getElementById("activeKeyCode");
     var activeKeyEventType = document.getElementById("activeKeyEventType");
 
-   
+    // --- Live Event Monitor Elements ---
+    var eventFeed = document.getElementById("eventFeed");
+    var emptyFeedState = document.getElementById("emptyFeedState");
+    var feedCountBadge = document.getElementById("feedCountBadge");
+    var clearFeedBtn = document.getElementById("clearFeedBtn");
 
     // --- State Variables ---
     var clickCount = 0;
@@ -46,21 +40,25 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     /**
-     * Log an event entry to the live event feed
+     * Log an event entry to the live event log
      * @param {string} category - 'Mouse' or 'Keyboard'
      * @param {string} eventName - e.g., 'mouseover', 'click', 'keydown'
-     * @param {string} detail - Contextual detail (e.g. key name or action)
+     * @param {string} detail - Contextual detail
      */
     function logEvent(category, eventName, detail) {
+        if (!eventFeed) return;
+
         totalLoggedEvents++;
-        feedCountBadge.textContent = totalLoggedEvents + " event" + (totalLoggedEvents === 1 ? "" : "s");
+        if (feedCountBadge) {
+            feedCountBadge.textContent = totalLoggedEvents + " event" + (totalLoggedEvents === 1 ? "" : "s");
+        }
 
         // Remove empty state message if present
         if (emptyFeedState && emptyFeedState.parentNode) {
             emptyFeedState.remove();
         }
 
-        // Create feed item using safe DOM construction (no innerHTML)
+        // Create feed list item safely
         var li = document.createElement("li");
         li.className = "feed-item";
 
@@ -68,16 +66,16 @@ document.addEventListener("DOMContentLoaded", function () {
         leftDiv.className = "feed-left";
 
         var badge = document.createElement("span");
-        badge.className = "feed-category-badge " + (category === "Mouse" ? "feed-category-mouse" : "feed-category-keyboard");
+        badge.className = "feed-badge";
         badge.textContent = category;
 
         var nameSpan = document.createElement("span");
-        nameSpan.className = "feed-event-name";
+        nameSpan.className = "feed-name";
         nameSpan.textContent = eventName;
 
         var descSpan = document.createElement("span");
-        descSpan.className = "feed-event-desc";
-        descSpan.textContent = detail ? "· " + detail : "";
+        descSpan.className = "feed-desc";
+        descSpan.textContent = detail ? "— " + detail : "";
 
         leftDiv.appendChild(badge);
         leftDiv.appendChild(nameSpan);
@@ -86,16 +84,16 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
         var timeSpan = document.createElement("span");
-        timeSpan.className = "feed-timestamp";
+        timeSpan.className = "feed-time";
         timeSpan.textContent = getTimestamp();
 
         li.appendChild(leftDiv);
         li.appendChild(timeSpan);
 
-        // Prepend new item to the top of the feed
+        // Prepend new item
         eventFeed.insertBefore(li, eventFeed.firstChild);
 
-        // Limit feed entries to latest MAX_FEED_ITEMS
+        // Cap at MAX_FEED_ITEMS
         while (eventFeed.children.length > MAX_FEED_ITEMS) {
             eventFeed.removeChild(eventFeed.lastChild);
         }
@@ -103,83 +101,49 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // =========================================================================
     // MOUSE EVENT HANDLERS
-    // Preserves original assignment messages:
-    // - "Mouse Over Event Occurred"
-    // - "Mouse Out Event Occurred"
-    // - "Mouse Click Event Occurred"
     // =========================================================================
 
-    /**
-     * Mouse Over Event
-     */
     function handleMouseOver() {
         mouseMessage.textContent = "Mouse Over Event Occurred";
-        mouseMessage.classList.add("highlight-crimson");
-        mouseEventTypeTag.textContent = "mouseover";
-        logEvent("Mouse", "mouseover", "Pointer entered test area");
+        mouseMessage.classList.add("highlight");
+        if (mouseEventTypeTag) mouseEventTypeTag.textContent = "mouseover";
+        logEvent("Mouse", "mouseover", "Entered box");
     }
 
-    /**
-     * Mouse Out Event
-     */
     function handleMouseOut() {
         mouseMessage.textContent = "Mouse Out Event Occurred";
-        mouseMessage.classList.remove("highlight-crimson");
-        mouseEventTypeTag.textContent = "mouseout";
-        logEvent("Mouse", "mouseout", "Pointer left test area");
+        mouseMessage.classList.remove("highlight");
+        if (mouseEventTypeTag) mouseEventTypeTag.textContent = "mouseout";
+        logEvent("Mouse", "mouseout", "Left box");
     }
 
-    /**
-     * Mouse Click Event
-     * @param {MouseEvent} e - Mouse event object
-     */
-    function handleMouseClick(e) {
+    function handleMouseClick() {
         clickCount++;
         mouseMessage.textContent = "Mouse Click Event Occurred";
-        mouseMessage.classList.add("highlight-crimson");
-        mouseEventTypeTag.textContent = "click";
-        mouseClickCounter.textContent = "Clicks: " + clickCount;
+        mouseMessage.classList.add("highlight");
+        if (mouseEventTypeTag) mouseEventTypeTag.textContent = "click";
+        if (mouseClickCounter) mouseClickCounter.textContent = "Clicks: " + clickCount;
 
-        // Visual click active effect on the interactive box
+        // Visual click feedback
         box.classList.add("clicked-active");
         setTimeout(function () {
             box.classList.remove("clicked-active");
-        }, 180);
+        }, 150);
 
-        // Trigger dynamic ripple animation at pointer location
-        if (e && e.clientX && e.clientY) {
-            var rect = box.getBoundingClientRect();
-            var x = e.clientX - rect.left;
-            var y = e.clientY - rect.top;
-
-            clickRipple.style.left = x + "px";
-            clickRipple.style.top = y + "px";
-            clickRipple.classList.remove("animate");
-            // Force DOM reflow to restart animation
-            void clickRipple.offsetWidth;
-            clickRipple.classList.add("animate");
-        }
-
-        logEvent("Mouse", "click", "Click #" + clickCount + " inside box");
+        logEvent("Mouse", "click", "Click #" + clickCount);
     }
 
-    // Attach Mouse Event Listeners
-    box.addEventListener("mouseover", handleMouseOver);
-    box.addEventListener("mouseout", handleMouseOut);
-    box.addEventListener("click", handleMouseClick);
+    // Attach Mouse Listeners
+    if (box) {
+        box.addEventListener("mouseover", handleMouseOver);
+        box.addEventListener("mouseout", handleMouseOut);
+        box.addEventListener("click", handleMouseClick);
+    }
 
     // =========================================================================
     // KEYBOARD EVENT HANDLERS
-    // Preserves original assignment messages:
-    // - "Keyboard Key Pressed"
-    // - "Keyboard Key Released"
     // =========================================================================
 
-    /**
-     * Format key display label
-     * @param {string} key - Raw event.key
-     * @returns {string} Clean user-facing label
-     */
     function formatKeyDisplay(key) {
         if (!key) return "—";
         if (key === " ") return "Space";
@@ -187,70 +151,72 @@ document.addEventListener("DOMContentLoaded", function () {
         return key;
     }
 
-    /**
-     * Keyboard Key Down Event
-     * @param {KeyboardEvent} e - Keyboard event object
-     */
     function handleKeyDown(e) {
         keyMessage.textContent = "Keyboard Key Pressed";
-        keyMessage.classList.add("highlight-crimson");
+        keyMessage.classList.add("highlight");
 
-        // Update telemetry values safely
-        activeKeyCap.textContent = formatKeyDisplay(e.key);
-        activeKeyCap.classList.add("pressed");
-        activeKeyName.textContent = e.key === " " ? "Space" : e.key;
-        activeKeyCode.textContent = e.code || String(e.keyCode);
-        activeKeyEventType.textContent = "keydown";
+        if (activeKeyCap) {
+            activeKeyCap.textContent = formatKeyDisplay(e.key);
+            activeKeyCap.classList.add("pressed");
+        }
+        if (activeKeyName) activeKeyName.textContent = e.key === " " ? "Space" : e.key;
+        if (activeKeyCode) activeKeyCode.textContent = e.code || String(e.keyCode);
+        if (activeKeyEventType) activeKeyEventType.textContent = "keydown";
 
-        logEvent("Keyboard", "keydown", "Key: \"" + (e.key === " " ? "Space" : e.key) + "\" (" + (e.code || e.keyCode) + ")");
+        logEvent("Keyboard", "keydown", "Key: \"" + (e.key === " " ? "Space" : e.key) + "\"");
     }
 
-    /**
-     * Keyboard Key Up Event
-     * @param {KeyboardEvent} e - Keyboard event object
-     */
     function handleKeyUp(e) {
         keyMessage.textContent = "Keyboard Key Released";
-        keyMessage.classList.remove("highlight-crimson");
+        keyMessage.classList.remove("highlight");
 
-        activeKeyCap.classList.remove("pressed");
-        activeKeyEventType.textContent = "keyup";
+        if (activeKeyCap) {
+            activeKeyCap.classList.remove("pressed");
+        }
+        if (activeKeyEventType) activeKeyEventType.textContent = "keyup";
 
         logEvent("Keyboard", "keyup", "Key: \"" + (e.key === " " ? "Space" : e.key) + "\" released");
     }
 
-    // Attach Keyboard Event Listeners
-    keyInput.addEventListener("keydown", handleKeyDown);
-    keyInput.addEventListener("keyup", handleKeyUp);
+    // Attach Keyboard Listeners
+    if (keyInput) {
+        keyInput.addEventListener("keydown", handleKeyDown);
+        keyInput.addEventListener("keyup", handleKeyUp);
+    }
 
     // Clear input field button handler
-    clearInputBtn.addEventListener("click", function () {
-        keyInput.value = "";
-        keyInput.focus();
-        keyMessage.textContent = "Awaiting keyboard input...";
-        keyMessage.classList.remove("highlight-crimson");
-        activeKeyCap.textContent = "—";
-        activeKeyCap.classList.remove("pressed");
-        activeKeyName.textContent = "None";
-        activeKeyCode.textContent = "None";
-        activeKeyEventType.textContent = "Idle";
-    });
+    if (clearInputBtn && keyInput) {
+        clearInputBtn.addEventListener("click", function () {
+            keyInput.value = "";
+            keyInput.focus();
+            keyMessage.textContent = "Keyboard Event Message";
+            keyMessage.classList.remove("highlight");
+            if (activeKeyCap) {
+                activeKeyCap.textContent = "—";
+                activeKeyCap.classList.remove("pressed");
+            }
+            if (activeKeyName) activeKeyName.textContent = "None";
+            if (activeKeyCode) activeKeyCode.textContent = "None";
+            if (activeKeyEventType) activeKeyEventType.textContent = "Idle";
+        });
+    }
 
     // =========================================================================
     // LIVE EVENT FEED CONTROLS
     // =========================================================================
 
-    /**
-     * Clear all recorded events from the feed
-     */
-    function clearEventFeed() {
-        while (eventFeed.firstChild) {
-            eventFeed.removeChild(eventFeed.firstChild);
-        }
-        eventFeed.appendChild(emptyFeedState);
-        totalLoggedEvents = 0;
-        feedCountBadge.textContent = "0 events";
+    if (clearFeedBtn && eventFeed) {
+        clearFeedBtn.addEventListener("click", function () {
+            while (eventFeed.firstChild) {
+                eventFeed.removeChild(eventFeed.firstChild);
+            }
+            if (emptyFeedState) {
+                eventFeed.appendChild(emptyFeedState);
+            }
+            totalLoggedEvents = 0;
+            if (feedCountBadge) {
+                feedCountBadge.textContent = "0 events";
+            }
+        });
     }
-
-    clearFeedBtn.addEventListener("click", clearEventFeed);
 });

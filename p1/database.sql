@@ -1,7 +1,3 @@
--- =====================================================================
--- Database: student_db
--- Program 1: Asynchronous AJAX Database Access
--- =====================================================================
 
 -- Step 1: Create Database if it doesn't already exist
 CREATE DATABASE IF NOT EXISTS student_db;
