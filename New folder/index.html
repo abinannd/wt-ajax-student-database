@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Country Explorer</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <h1>Country Explorer</h1>
+    <p>Hover over a country to highlight it. Click it to see its details.</p>
+  </header>
+
+  <main>
+    <div id="map"></div>
+    <p id="mapError" class="error" hidden>The map could not be loaded. Check your internet connection and reload the page.</p>
+  </main>
+
+  <div id="details" class="modal-overlay" hidden>
+    <div class="modal-box">
+      <button id="closeDetails" class="modal-close" type="button" aria-label="Close">&times;</button>
+      <h2 id="detailsTitle"></h2>
+      <div id="detailsBody"></div>
+    </div>
+  </div>
+
+  <footer class="site-footer">
+    <p>
+      <span id="loadStatus">Loading…</span> |
+      <span id="hoverStatus">Pointer over: none</span> |
+      <span id="keyStatus">Last key released: none</span> |
+      <span id="sizeStatus"></span>
+    </p>
+  </footer>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="data.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

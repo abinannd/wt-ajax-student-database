@@ -1,0 +1,154 @@
+:root {
+  --ink: #12263a;
+  --paper: #f2f6f9;
+  --teal: #0b6e69;
+  --teal-dark: #08514d;
+  --sun: #f2b134;
+  --line: #cfdae3;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+body {
+  margin: 0;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  color: var(--ink);
+  background: var(--paper);
+}
+
+.site-header {
+  background: var(--ink);
+  color: #fff;
+  text-align: center;
+  padding: 20px 16px;
+  border-bottom: 5px solid var(--sun);
+}
+
+.site-header h1 {
+  margin: 0 0 4px;
+}
+
+.site-header p {
+  margin: 0;
+  color: #d5e2ee;
+}
+
+main {
+  max-width: 1300px;
+  margin: 20px auto;
+  padding: 0 16px;
+}
+
+#map {
+  height: calc(100vh - 220px);
+  min-height: 420px;
+  background: #d3e4ee;
+  border: 2px solid var(--line);
+  border-radius: 12px;
+}
+
+.leaflet-interactive {
+  transition: transform 0.15s;
+}
+
+.leaflet-interactive.pop {
+  transform-box: fill-box;
+  transform-origin: center;
+  transform: scale(1.05);
+  filter: drop-shadow(0 4px 4px rgba(18, 38, 58, 0.5));
+}
+
+.error {
+  text-align: center;
+  font-weight: 600;
+  background: #fff7e0;
+  border: 2px solid var(--sun);
+  border-radius: 10px;
+  padding: 16px;
+}
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(18, 38, 58, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  z-index: 2000;
+}
+
+.modal-box {
+  position: relative;
+  background: #fff;
+  border-radius: 14px;
+  padding: 24px;
+  width: 100%;
+  max-width: 520px;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.modal-box h2 {
+  margin: 0 0 12px;
+  padding-right: 32px;
+  border-bottom: 2px solid var(--line);
+  padding-bottom: 8px;
+}
+
+.modal-close {
+  position: absolute;
+  top: 12px;
+  right: 14px;
+  font-size: 1.8rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.flag {
+  display: block;
+  width: 200px;
+  max-width: 100%;
+  margin: 0 auto 14px;
+  border: 1px solid var(--line);
+}
+
+dl {
+  margin: 0;
+}
+
+dt {
+  font-weight: 700;
+  color: var(--teal-dark);
+  margin-top: 8px;
+}
+
+dd {
+  margin: 0;
+}
+
+.note {
+  background: #fff7e0;
+  border: 2px solid var(--sun);
+  border-radius: 8px;
+  padding: 12px;
+  font-weight: 600;
+}
+
+.site-footer {
+  text-align: center;
+  font-size: 0.85rem;
+  padding: 16px;
+  color: var(--ink);
+}
+
+.site-footer p {
+  margin: 0;
+}
